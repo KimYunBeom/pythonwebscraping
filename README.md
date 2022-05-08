@@ -26,6 +26,11 @@ ModuleNotFoundError: No module named 'requests'
 $ pip install requests
 ```
 
+```console
+$ pip install beautifulsoup4
+$ pip install lxml
+```
+
 ## 강의 오류 정정
 
 https://www.inflearn.com/news/101137
