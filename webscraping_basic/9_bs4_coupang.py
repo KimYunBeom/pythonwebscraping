@@ -11,17 +11,19 @@ soup = BeautifulSoup(res.text, 'lxml')
 items = soup.find_all( 'li', attrs= { 'class' : re.compile( '^search-product' ) } )
 
 # print(items[0].find('div', attrs= { 'class':'name' } ).get_text())
+
 for item in items:
   name = item.find( 'div', attrs= { 'class':'name' } ).get_text() # 제품명
+
   price = item.find( 'strong', attrs={ 'class':'price-value' } ).get_text() # 가격
-  # 평점 (Rating)
-  rate = item.find( 'em', attrs={ 'class':'rating' } )
+  
+  rate = item.find( 'em', attrs={ 'class':'rating' } ) # 평점 (Rating)
   if rate:
     rate = rate.get_text()
   else:
     rate = '평점 없음'
-  # 평점 수
-  rate_cnt = item.find( 'span', attrs={ 'class':'rating-total-count' } )
+  
+  rate_cnt = item.find( 'span', attrs={ 'class':'rating-total-count' } ) # 평점 수
   if rate_cnt:
     rate_cnt = rate_cnt.get_text()
   else:
