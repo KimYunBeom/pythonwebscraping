@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
 browser = webdriver.Chrome()
@@ -36,4 +38,13 @@ time.sleep(1)
 
 browser.find_element(By.XPATH, '//*[@id="__next"]/div/div[1]/div[9]/div[2]/section/div/a/div/div[1]/i[1]/mark').click()
 
+# 항공권 검색 클릭
 browser.find_element(By.CSS_SELECTOR, 'div.main_searchbox__3vrV3 > div > div > button').click()
+
+try:
+  elem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.domestic_Flight__sK0eA')))
+
+  # 성공했을 때 동작 수행
+  print(elem.text) # 첫번째 결과 출력
+finally:
+  browser.quit()
