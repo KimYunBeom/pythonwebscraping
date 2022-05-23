@@ -51,3 +51,7 @@ https://www.whatismybrowser.com/detect/what-is-my-user-agent
 ## selenium을 사용하기 위한 chrome driver download
 
 https://chromedriver.chromium.org/downloads
+
+## selenium 가이드
+
+https://selenium-python.readthedocs.io
