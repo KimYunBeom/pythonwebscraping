@@ -40,23 +40,35 @@ movies = soup.find_all('div', attrs={'class':'ULeU3b neq64b'})
 print(len(movies))
 
 for movie in movies:
-  try:
-    title = movie.find('div', attrs={'class':'Epkrse'}).get_text()
-    
-    # 할인 전 가격
-    original_price = movie.find('span', attrs={'class':'SUZt4c P8AFK'})
-    if original_price:
-      original_price = original_price.get_text()
-    else:
-      print(title, ' <할인되지 않은 영화 제외>')
-      continue
+  title = movie.find('div', attrs={'class':'Epkrse'})
+  if title:
+    title = title.get_text()
+  else:
+    continue
+  
+  # 할인 전 가격
+  original_price = movie.find('span', attrs={'class':'SUZt4c P8AFK'}
+  )
+  if original_price:
+    original_price = original_price.find('span').get_text()
+  else:
+    continue
 
-    # 할인된 가격
-    price = movie.find('span', attrs={'class':'VfPpfd VixbEe'})
+  # 할인된 가격
+  price = movie.find('span', attrs={'class':'VfPpfd VixbEe'})
+  if price:
+    price = price.find('span').get_text()
+  else:
+    continue
 
-    # 링크
-    link  = movie.find('a', attrs={'class':''})['href']
-    # 올바른 링크 : https://play.google.com + link
-  except:
-    print('예외발생')
+  # 링크
+  link  = movie.find('a', attrs={'class':'Si6A0c ZD8Cqc'})['href']
+  # 올바른 링크 : https://play.google.com + link
 
+  print(f'제목 :{title}')
+  print(f'할인 전 금액 :{original_price}')
+  print(f'할인 후 금액 :{price}')
+  print('링크 : ', 'https://play.google.com' + link)
+  print('-' * 100)
+
+browser.quit()
