@@ -1,15 +1,17 @@
 '''
-[IT 뉴스]
-1. 무슨 무슨 일이...
- (링크 : http://...)
-2. 어떤 어떤 일이...
- (링크 : http://...)
-3. 이런 저런 일이...
- (링크 : http://...)
+[오늘의 영어 회화]
+(영어 지문)
+Jason : How do you think bla bla..?
+Kim : Well, I think ...
+
+(한글 지문)
+Jason : 어쩌구 저쩌구 어떻게 생각하세요?
+Kim : 글쎄요, 저는 어쩌구 저쩌구 
 '''
 
 from bs4 import BeautifulSoup
 import requests
+import re
 
 def create_soup(url):
   headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36'}
@@ -65,6 +67,8 @@ def scrape_headline_news():
     link = news['href']
     print_news(index, title, link)
 
+  print()
+
 def scrape_it_news():
   print('[IT 일반]')
 
@@ -85,7 +89,32 @@ def scrape_it_news():
     link = a_tag['href']
     print_news(index, title, link)
 
+  print()
+
+def scrape_english():
+  print('[오늘의 영어 회화]')
+
+  url = 'https://www.hackers.co.kr/?c=s_eng/eng_contents/I_others_english&keywd=haceng_submain_lnb_eng_I_others_english&logger_kw=haceng_submain_lnb_eng_I_others_english'
+
+  soup = create_soup(url)
+
+  sentences = soup.find_all('div', {'id':re.compile('^conv_kor_t')})
+
+  print('(영어 지문)')
+
+  for sentence in sentences[len(sentences)//2:]: # 8문장이 있다고 가정할 때, index 기준 4~7 까지 잘라서 가져옴
+    print(sentence.get_text().strip())
+
+  print()
+  print('(한글 지문)')
+
+  for sentence in sentences[:len(sentences)//2]: # 8문장이 있다고 가정할 때, index 기준 0~3 까지 잘라서 가져옴
+    print(sentence.get_text().strip())
+
+  print()
+
 if __name__ == '__main__':
-  # scrape_weather() # 오늘의 날씨 정보 가져오기
-  # scrape_headline_news()
+  scrape_weather()
+  scrape_headline_news()
   scrape_it_news()
+  scrape_english()
